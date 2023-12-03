@@ -135,14 +135,14 @@ namespace PaintingTool
             if(TimerTime <= 0)
             {
                 GameTimer.Stop();
-                MessageBox.Show("Score : " + Score, "게임 오버", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Score = 0;
                 GameStarted = false;
                 NowWood = 0;
                 this.Invalidate();
                 this.GameStart.Show();
                 this.TimeLeft.Hide();
                 TimerTime = 0;
+                MessageBox.Show("Score : " + Score, "게임 오버", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Score = 0;
             }
             else
             {
@@ -209,14 +209,14 @@ namespace PaintingTool
             if (!isIntersect.IsEmpty)
             {
                 GameTimer.Stop();
-                MessageBox.Show("Score : " + Score, "게임 오버", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Score = 0;
                 GameStarted = false;
                 NowWood = 0;
                 this.Invalidate();
                 this.GameStart.Show();
                 this.TimeLeft.Hide();
                 TimerTime = 0;
+                MessageBox.Show("Score : " + Score, "게임 오버", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Score = 0;
             }
             else
             {
@@ -227,9 +227,13 @@ namespace PaintingTool
         private void TimeControl()
         {
             GameTimer.Stop();
-            if (TimeLimit > 10)
+            if (TimeLimit > 5)
             {
                 TimeLimit -= 5;
+            }
+            else
+            {
+                TimeLimit = 2;
             }
             TimerTime = TimeLimit;
             TimeLeft.Text = TimerTime / 10  + "." + TimerTime % 10;
