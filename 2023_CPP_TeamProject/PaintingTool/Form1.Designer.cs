@@ -32,14 +32,15 @@
             this.GameStart = new System.Windows.Forms.Button();
             this.GameTimer = new System.Windows.Forms.Timer(this.components);
             this.TimeLeft = new System.Windows.Forms.Label();
+            this.ScoreLbl = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // GameStart
             // 
-            this.GameStart.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.GameStart.BackColor = System.Drawing.Color.Black;
             this.GameStart.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.GameStart.Font = new System.Drawing.Font("Elephant", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.GameStart.ForeColor = System.Drawing.Color.DarkGreen;
+            this.GameStart.ForeColor = System.Drawing.Color.White;
             this.GameStart.Location = new System.Drawing.Point(200, 300);
             this.GameStart.Name = "GameStart";
             this.GameStart.Size = new System.Drawing.Size(200, 100);
@@ -54,21 +55,32 @@
             // 
             // TimeLeft
             // 
-            this.TimeLeft.BackColor = System.Drawing.Color.Sienna;
+            this.TimeLeft.BackColor = System.Drawing.Color.Black;
             this.TimeLeft.Font = new System.Drawing.Font("Elephant", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TimeLeft.ForeColor = System.Drawing.Color.Yellow;
-            this.TimeLeft.Location = new System.Drawing.Point(200, 11);
+            this.TimeLeft.Location = new System.Drawing.Point(225, 11);
             this.TimeLeft.Name = "TimeLeft";
-            this.TimeLeft.Size = new System.Drawing.Size(200, 50);
+            this.TimeLeft.Size = new System.Drawing.Size(150, 50);
             this.TimeLeft.TabIndex = 1;
             this.TimeLeft.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // ScoreLbl
+            // 
+            this.ScoreLbl.Font = new System.Drawing.Font("Elephant", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ScoreLbl.ForeColor = System.Drawing.Color.Black;
+            this.ScoreLbl.Location = new System.Drawing.Point(480, 15);
+            this.ScoreLbl.Name = "ScoreLbl";
+            this.ScoreLbl.Size = new System.Drawing.Size(100, 25);
+            this.ScoreLbl.TabIndex = 2;
+            this.ScoreLbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(580, 757);
+            this.Controls.Add(this.ScoreLbl);
             this.Controls.Add(this.TimeLeft);
             this.Controls.Add(this.GameStart);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
@@ -88,6 +100,7 @@
         private System.Windows.Forms.Button GameStart;
         private System.Windows.Forms.Timer GameTimer;
         private System.Windows.Forms.Label TimeLeft;
+        private System.Windows.Forms.Label ScoreLbl;
     }
 }
 
