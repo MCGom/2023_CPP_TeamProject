@@ -205,7 +205,7 @@ namespace PaintingTool
                 this.TimeLeft.Hide();
                 this.ScoreLbl.Hide();
                 TimerTime = 0;
-                MessageBox.Show("Score : " + Score, "게임 오버", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Score : " + Score + " 점", "게임 오버", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Controls.Remove(WoodsPic[2]);
                 Controls.Remove(WoodsPic[1]);
                 Controls.Remove(WoodsPic[0]);
@@ -341,7 +341,7 @@ namespace PaintingTool
                 this.TimeLeft.Hide();
                 this.ScoreLbl.Hide();
                 TimerTime = 0;
-                MessageBox.Show("Score : " + Score, "게임 오버", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("점수 : " + Score, "게임 오버", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Controls.Remove(WoodsPic[2]);
                 Controls.Remove(WoodsPic[1]);
                 Controls.Remove(WoodsPic[0]);
