@@ -57,7 +57,7 @@
             // 
             this.TimeLeft.BackColor = System.Drawing.Color.Black;
             this.TimeLeft.Font = new System.Drawing.Font("Elephant", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TimeLeft.ForeColor = System.Drawing.Color.Yellow;
+            this.TimeLeft.ForeColor = System.Drawing.Color.White;
             this.TimeLeft.Location = new System.Drawing.Point(225, 11);
             this.TimeLeft.Name = "TimeLeft";
             this.TimeLeft.Size = new System.Drawing.Size(150, 50);

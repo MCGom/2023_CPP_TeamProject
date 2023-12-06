@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Windows.Forms.VisualStyles;
 using System.IO;
+using System.Resources;
+using PaintingTool.Properties;
 
 namespace PaintingTool
 {
@@ -20,6 +22,7 @@ namespace PaintingTool
         private Rectangle Player;
         private Rectangle[] Woods = new Rectangle[3];
 
+        private PictureBox PlayerPic;
         private PictureBox[] WoodsPic = new PictureBox[3];
 
         private Brush Player_B;
@@ -35,6 +38,8 @@ namespace PaintingTool
         private int Score = 0;
         private int TimeLimit = 300;
         private int TimerTime = 0;
+
+        ResourceManager resourceManager;
         public Form1()
         {
             InitializeComponent();
@@ -44,7 +49,7 @@ namespace PaintingTool
 
             Ground = new Rectangle(0, 600, 600, 200);
 
-            Player_B = new SolidBrush(Color.Black);
+            Player_B = new SolidBrush(Color.FromArgb(0, 1, 1, 1));
             Woods_B = new SolidBrush(Color.FromArgb(0, 1, 1, 1));
 
             WoodType = new Random();
@@ -54,8 +59,7 @@ namespace PaintingTool
 
             this.ScoreLbl.BackColor = Color.Transparent;
 
-
-
+            resourceManager = new ResourceManager("PaintingTool.Properties.Resources", typeof(Program).Assembly);
 
         }
 
@@ -96,11 +100,13 @@ namespace PaintingTool
 
         private void KeyDownEvent(KeyEventArgs keyCheck)
         {
+            Controls.Remove(PlayerPic);
             if (keyCheck.KeyCode == Keys.Right)
             {
                 if (IsLeftClicked == true)
                 {
                     Player.Offset(450, 0);
+                    PlayerPic.Location = new Point(500, 500);
                     IsLeftClicked = false;
                 }
             }
@@ -109,14 +115,17 @@ namespace PaintingTool
                 if (IsLeftClicked == false)
                 {
                     Player.Offset(-450, 0);
+                    PlayerPic.Location = new Point(50, 500);
                     IsLeftClicked = true;
                 }
             }
+
             WoodChanged(NowWood);
+            Controls.Add(PlayerPic);
             this.Invalidate();
 
             WoodNumbering();
-            if (GameOver(Player, Woods[NowWood]))
+            if (GameOver(Player, Woods[NowWood]) == false)
             {
                 TimeControl();
             }
@@ -151,9 +160,9 @@ namespace PaintingTool
             WoodsPic[1].SizeMode = PictureBoxSizeMode.StretchImage;
             WoodsPic[2].SizeMode = PictureBoxSizeMode.StretchImage;
 
-            WoodsPicChange("images/TreeRight.png", 0);
-            WoodsPicChange("images/TreeLeft.png", 1);
-            WoodsPicChange("images/TreeRight.png", 2);
+            WoodsPicChange("TreeRight", 0);
+            WoodsPicChange("TreeLeft", 1);
+            WoodsPicChange("TreeRight", 2);
 
 
             Controls.Add(WoodsPic[0]);
@@ -161,6 +170,19 @@ namespace PaintingTool
             Controls.Add(WoodsPic[2]);
 
             Player = new Rectangle(50, 500, 50, 100);
+
+            PlayerPic = new PictureBox();
+
+            PlayerPic.Size = new Size(50, 100);
+
+            PlayerPic.Location = new Point(50, 500);
+
+            PlayerPic.SizeMode = PictureBoxSizeMode.StretchImage;
+
+            PlayerPic.Image = (Image)resourceManager.GetObject("Human");
+
+            Controls.Add(PlayerPic);
+
             this.TimeLeft.Show();
             this.ScoreLbl.Show();
 
@@ -181,11 +203,13 @@ namespace PaintingTool
                 NowWood = 0;
                 this.Invalidate();
                 this.TimeLeft.Hide();
+                this.ScoreLbl.Hide();
                 TimerTime = 0;
+                MessageBox.Show("Score : " + Score, "게임 오버", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Controls.Remove(WoodsPic[2]);
                 Controls.Remove(WoodsPic[1]);
                 Controls.Remove(WoodsPic[0]);
-                MessageBox.Show("Score : " + Score, "게임 오버", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Controls.Remove(PlayerPic);
                 Score = 0;
                 this.GameStart.Show();
             }
@@ -198,29 +222,46 @@ namespace PaintingTool
 
         private void WoodChanged(int idx)
         {
-            int WoodTypeTmp = WoodType.Next(2);
+            int WoodTypeTmp = WoodType.Next(100);
 
-            switch(WoodTypeTmp)
+            if(WoodTypeTmp >= 0 && WoodTypeTmp < 45)
             {
-                case 0:
-                    {
-                        Woods[idx].Location = new Point(190, 0);
-                        WoodsPic[idx].Location = new Point(190, 0);
-                        WoodsPicChange("images/TreeRight.png", idx);
-                        Controls.Remove(WoodsPic[idx]);
-                        WoodIndexing(idx);
-                    }
-                    break;
-                case 1:
-                    {
-                        Woods[idx].Location = new Point(20, 0);
-                        WoodsPic[idx].Location = new Point(20, 0);
-                        WoodsPicChange("images/TreeLeft.png", idx);
-                        Controls.Remove(WoodsPic[idx]);
-                        WoodIndexing(idx);
-                    }
-                    break;
+                Woods[idx].Location = new Point(190, 0);
+                WoodsPic[idx].Location = new Point(190, 0);
+
+                Woods[idx].Size = new Size(370, 200);
+                WoodsPic[idx].Size = new Size(370, 200);
+
+                WoodsPicChange("TreeRight", idx);
+                Controls.Remove(WoodsPic[idx]);
+                WoodIndexing(idx);
             }
+            else if(WoodTypeTmp >= 45 && WoodTypeTmp < 90)
+            {
+                Woods[idx].Location = new Point(20, 0);
+                WoodsPic[idx].Location = new Point(20, 0);
+
+                Woods[idx].Size = new Size(370, 200);
+                WoodsPic[idx].Size = new Size(370, 200);
+
+                WoodsPicChange("TreeLeft", idx);
+                Controls.Remove(WoodsPic[idx]);
+                WoodIndexing(idx);
+            }
+            else
+            {
+                Woods[idx].Location = new Point(190, 0);
+                WoodsPic[idx].Location = new Point(190, 0);
+
+                Woods[idx].Size = new Size(200, 200);
+                WoodsPic[idx].Size = new Size(200, 200);
+
+                WoodsPicChange("TreeNone", idx);
+                Controls.Remove(WoodsPic[idx]);
+                WoodIndexing(idx);
+
+            }
+
         }
         private void WoodIndexing(int idx)
         {
@@ -298,11 +339,13 @@ namespace PaintingTool
                 NowWood = 0;
                 this.Invalidate();
                 this.TimeLeft.Hide();
+                this.ScoreLbl.Hide();
                 TimerTime = 0;
+                MessageBox.Show("Score : " + Score, "게임 오버", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Controls.Remove(WoodsPic[2]);
                 Controls.Remove(WoodsPic[1]);
                 Controls.Remove(WoodsPic[0]);
-                MessageBox.Show("Score : " + Score, "게임 오버", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Controls.Remove(PlayerPic);
                 Score = 0;
                 this.GameStart.Show();
 
@@ -336,8 +379,8 @@ namespace PaintingTool
         private void WoodsPicChange(string imagePath, int idx)
         {
             // PictureBox의 이미지 업데이트
-            Image newImage = Image.FromFile(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "/" + imagePath);
-            WoodsPic[idx].Image = newImage;
+            
+            WoodsPic[idx].Image = (Image)resourceManager.GetObject(imagePath);
         }
 
     }
